@@ -9,7 +9,7 @@ client = TestClient(app)
 def test_frontend_root_available():
     response = client.get("/")
     assert response.status_code == 200
-    assert "Robo IQ" in response.text
+    assert "Robo QI" in response.text
 
 
 def test_health():
