@@ -7,6 +7,10 @@ function log(data) {
   logEl.textContent = `[${stamp}] ${txt}\n\n` + logEl.textContent;
 }
 
+function sideLabel(side) {
+  return side === 'buy' ? 'comprar' : side === 'sell' ? 'vender' : side;
+}
+
 async function api(path, options = {}) {
   const resp = await fetch(path, {
     headers: { 'content-type': 'application/json', ...(options.headers || {}) },
@@ -23,7 +27,7 @@ function orderRow(order) {
   return `<tr>
     <td>${order.id}</td>
     <td>${order.symbol}</td>
-    <td>${order.side}</td>
+    <td>${sideLabel(order.side)}</td>
     <td>${order.status}</td>
     <td>
       <button onclick="monitorOrder('${order.id}')">Monitorar</button>
@@ -69,7 +73,13 @@ async function analyze() {
   const symbol = document.getElementById('symbol').value;
   try {
     const data = await api(`/market/${symbol}`, { method: 'GET' });
-    log({ message: 'análise de mercado', symbol, trend: data.trend, signal: data.signal, current_price: data.current_price });
+    log({
+      message: 'análise de mercado',
+      ativo: symbol.toUpperCase(),
+      tendencia: data.trend,
+      sinal: sideLabel(data.signal),
+      preco_atual: data.current_price,
+    });
   } catch (err) {
     log(`Falha na análise: ${err.message}`);
   }
@@ -85,7 +95,16 @@ async function createOrder() {
       method: 'POST',
       body: JSON.stringify({ symbol, side, amount, expiration_seconds: 60 }),
     });
-    log({ message: 'ordem criada', order: data.order });
+    log({
+      message: 'ordem criada com sucesso',
+      ordem: {
+        id: data.order.id,
+        ativo: data.order.symbol,
+        lado: sideLabel(data.order.side),
+        status: data.order.status,
+        valor: data.order.amount,
+      },
+    });
     await refreshOrders();
   } catch (err) {
     log(`Falha ao criar ordem: ${err.message}`);
@@ -95,7 +114,15 @@ async function createOrder() {
 async function monitorOrder(orderId) {
   try {
     const data = await api(`/orders/${orderId}/monitor`, { method: 'POST', body: '{}' });
-    log({ message: 'ordem monitorada', order: data.order });
+    log({
+      message: 'ordem monitorada',
+      ordem: {
+        id: data.order.id,
+        ativo: data.order.symbol,
+        lado: sideLabel(data.order.side),
+        status: data.order.status,
+      },
+    });
     await refreshOrders();
   } catch (err) {
     log(`Falha ao monitorar ordem: ${err.message}`);
@@ -105,7 +132,15 @@ async function monitorOrder(orderId) {
 async function cancelOrder(orderId) {
   try {
     const data = await api(`/orders/${orderId}/cancel`, { method: 'POST', body: '{}' });
-    log({ message: 'ordem cancelada', order: data.order });
+    log({
+      message: 'ordem cancelada',
+      ordem: {
+        id: data.order.id,
+        ativo: data.order.symbol,
+        lado: sideLabel(data.order.side),
+        status: data.order.status,
+      },
+    });
     await refreshOrders();
   } catch (err) {
     log(`Falha ao cancelar ordem: ${err.message}`);

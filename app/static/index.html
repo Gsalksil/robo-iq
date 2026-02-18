@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Robo IQ - Painel</title>
+    <title>Robo QI - Painel</title>
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
   <body>
     <main class="container">
       <header>
-        <h1>Robo IQ</h1>
-        <p>Painel de conexão, análise de mercado e ordens.</p>
+        <h1>Robo QI</h1>
+        <p>Painel para conectar sua conta, analisar o mercado e gerenciar ordens com clareza.</p>
       </header>
 
       <section class="card">
@@ -37,12 +37,12 @@
           </label>
           <label>Lado
             <select id="side">
-              <option value="buy">buy</option>
-              <option value="sell">sell</option>
+              <option value="buy">Comprar</option>
+              <option value="sell">Vender</option>
             </select>
           </label>
           <label>Valor
-            <input id="amount" type="number" min="1" value="25" />
+            <input id="amount" type="number" min="1" value="10" />
           </label>
         </div>
         <div class="actions">
@@ -59,7 +59,7 @@
         <table>
           <thead>
             <tr>
-              <th>ID</th>
+              <th>Ordem</th>
               <th>Ativo</th>
               <th>Lado</th>
               <th>Status</th>
@@ -71,7 +71,7 @@
       </section>
 
       <section class="card">
-        <h2>Logs</h2>
+        <h2>Registros</h2>
         <pre id="log"></pre>
       </section>
     </main>
