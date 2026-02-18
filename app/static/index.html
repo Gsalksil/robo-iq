@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Robo IQ - Painel</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>Robo IQ</h1>
+        <p>Painel de conexão, análise de mercado e ordens.</p>
+      </header>
+
+      <section class="card">
+        <h2>Conexão</h2>
+        <div class="grid">
+          <label>Gmail
+            <input id="gmail" type="email" placeholder="seuusuario@gmail.com" />
+          </label>
+          <label>Senha
+            <input id="senha" type="password" placeholder="********" />
+          </label>
+        </div>
+        <div class="actions">
+          <button id="btnConnect">Conectar</button>
+          <button id="btnDisconnect" class="secondary">Desconectar</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Análise de mercado</h2>
+        <div class="grid three">
+          <label>Ativo
+            <input id="symbol" value="EURUSD" />
+          </label>
+          <label>Lado
+            <select id="side">
+              <option value="buy">buy</option>
+              <option value="sell">sell</option>
+            </select>
+          </label>
+          <label>Valor
+            <input id="amount" type="number" min="1" value="25" />
+          </label>
+        </div>
+        <div class="actions">
+          <button id="btnMarket">Analisar mercado</button>
+          <button id="btnCreate">Criar ordem</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Ordens</h2>
+        <div class="actions">
+          <button id="btnList" class="secondary">Atualizar lista</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Ativo</th>
+              <th>Lado</th>
+              <th>Status</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2>Logs</h2>
+        <pre id="log"></pre>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
